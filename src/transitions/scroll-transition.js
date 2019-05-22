@@ -108,9 +108,9 @@ export default class ScrollTransition extends React.Component {
     const transformScale =
       this.props.animation === 'zoom' && this.props.currentSlide !== index
         ? Math.max(
-            Math.min(this.props.zoomScale, MAX_ZOOM_SCALE),
-            MIN_ZOOM_SCALE
-          )
+          Math.min(this.props.zoomScale, MAX_ZOOM_SCALE),
+          MIN_ZOOM_SCALE
+        )
         : 1.0;
     return {
       boxSizing: 'border-box',
@@ -133,12 +133,16 @@ export default class ScrollTransition extends React.Component {
   }
 
   getListStyles(styles) {
-    const { deltaX, deltaY } = styles;
+    const rtlEnabled = styles;
+    const deltaX = styles;
+    const deltaY = styles;
     const listWidth =
       this.props.slideWidth * React.Children.count(this.props.children);
     const spacingOffset =
       this.props.cellSpacing * React.Children.count(this.props.children);
-    const transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
+    const transform = rtlEnabled
+      ? `translate3d(${-deltaX}px, ${-deltaY}px, 0)`
+      : `translate3d(${deltaX}px, ${deltaY}px, 0)`;
     return {
       transform,
       WebkitTransform: transform,
@@ -164,11 +168,12 @@ export default class ScrollTransition extends React.Component {
     const children = this.formatChildren(this.props.children);
     const deltaX = this.props.deltaX;
     const deltaY = this.props.deltaY;
+    const rtlEnabled = this.props.rtlEnabled;
 
     return (
       <ul
         className="slider-list"
-        style={this.getListStyles({ deltaX, deltaY })}
+        style={this.getListStyles({ deltaX, deltaY, rtlEnabled })}
       >
         {children}
       </ul>
@@ -192,7 +197,8 @@ ScrollTransition.propTypes = {
   top: PropTypes.number,
   vertical: PropTypes.bool,
   wrapAround: PropTypes.bool,
-  zoomScale: PropTypes.number
+  zoomScale: PropTypes.number,
+  rtlEnabled: PropTypes.bool
 };
 
 ScrollTransition.defaultProps = {
@@ -209,5 +215,6 @@ ScrollTransition.defaultProps = {
   top: 0,
   vertical: false,
   wrapAround: false,
-  zoomScale: 0.85
+  zoomScale: 0.85,
+  rtlEnabled: false
 };

@@ -39,6 +39,7 @@ class App extends React.Component {
     return (
       <div style={{ width: '50%', margin: 'auto' }}>
         <Carousel
+          autoplay
           slidesToShow={this.state.slidesToShow}
           slidesToScroll={this.state.slidesToScroll}
           withoutControls={this.state.withoutControls}
