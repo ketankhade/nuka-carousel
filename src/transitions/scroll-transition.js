@@ -133,20 +133,25 @@ export default class ScrollTransition extends React.Component {
   }
 
   getListStyles(styles) {
-    const rtlEnabled = styles;
-    const deltaX = styles;
-    const deltaY = styles;
+    var rtlEnabled = styles.rtlEnabled;
+    var deltaX = styles.deltaX;
+    var deltaY = styles.deltaY;
+
+    console.log("deltaX >>", deltaX);
+    console.log("deltaY >>", deltaX);
+
+
+    deltaX = rtlEnabled ? -deltaX : deltaX;
+    deltaY = rtlEnabled ? -deltaY : deltaY;
     const listWidth =
       this.props.slideWidth * React.Children.count(this.props.children);
     const spacingOffset =
       this.props.cellSpacing * React.Children.count(this.props.children);
-    const transform = rtlEnabled
-      ? `translate3d(${-deltaX}px, ${-deltaY}px, 0)`
-      : `translate3d(${deltaX}px, ${deltaY}px, 0)`;
+    const transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
     return {
-      transform,
+      transform: transform,
       WebkitTransform: transform,
-      msTransform: `translate(${deltaX}px, ${deltaY}px)`,
+      msTransform: transform,
       position: 'relative',
       display: 'block',
       margin: this.props.vertical
