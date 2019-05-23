@@ -250,15 +250,15 @@ export default class Carousel extends React.Component {
 
         const length = this.props.vertical
           ? Math.round(
-              Math.sqrt(
-                Math.pow(e.touches[0].pageY - this.touchObject.startY, 2)
-              )
+            Math.sqrt(
+              Math.pow(e.touches[0].pageY - this.touchObject.startY, 2)
             )
+          )
           : Math.round(
-              Math.sqrt(
-                Math.pow(e.touches[0].pageX - this.touchObject.startX, 2)
-              )
-            );
+            Math.sqrt(
+              Math.pow(e.touches[0].pageX - this.touchObject.startX, 2)
+            )
+          );
 
         this.touchObject = {
           startX: this.touchObject.startX,
@@ -273,12 +273,12 @@ export default class Carousel extends React.Component {
           left: this.props.vertical
             ? 0
             : this.getTargetLeft(
-                this.touchObject.length * this.touchObject.direction
-              ),
+              this.touchObject.length * this.touchObject.direction
+            ),
           top: this.props.vertical
             ? this.getTargetLeft(
-                this.touchObject.length * this.touchObject.direction
-              )
+              this.touchObject.length * this.touchObject.direction
+            )
             : 0
         });
       },
@@ -340,11 +340,11 @@ export default class Carousel extends React.Component {
 
         const length = this.props.vertical
           ? Math.round(
-              Math.sqrt(Math.pow(e.clientY - this.touchObject.startY, 2))
-            )
+            Math.sqrt(Math.pow(e.clientY - this.touchObject.startY, 2))
+          )
           : Math.round(
-              Math.sqrt(Math.pow(e.clientX - this.touchObject.startX, 2))
-            );
+            Math.sqrt(Math.pow(e.clientX - this.touchObject.startX, 2))
+          );
 
         // prevents disabling click just because mouse moves a fraction of a pixel
         if (length >= 10) this.clickDisabled = true;
@@ -362,12 +362,12 @@ export default class Carousel extends React.Component {
           left: this.props.vertical
             ? 0
             : this.getTargetLeft(
-                this.touchObject.length * this.touchObject.direction
-              ),
+              this.touchObject.length * this.touchObject.direction
+            ),
           top: this.props.vertical
             ? this.getTargetLeft(
-                this.touchObject.length * this.touchObject.direction
-              )
+              this.touchObject.length * this.touchObject.direction
+            )
             : 0
         });
       },
@@ -642,14 +642,14 @@ export default class Carousel extends React.Component {
             left: props.vertical
               ? 0
               : this.getTargetLeft(
-                  this.state.slideWidth,
-                  prevState.currentSlide
-                ),
+                this.state.slideWidth,
+                prevState.currentSlide
+              ),
             top: props.vertical
               ? this.getTargetLeft(
-                  this.state.slideWidth,
-                  prevState.currentSlide
-                )
+                this.state.slideWidth,
+                prevState.currentSlide
+              )
               : 0,
             currentSlide: 0,
             isWrappingAround: true,
@@ -930,11 +930,11 @@ export default class Carousel extends React.Component {
     } = this.props;
     const duration =
       this.state.dragging ||
-      (!this.state.dragging &&
-        this.state.resetWrapAroundPosition &&
-        this.props.wrapAround) ||
-      disableAnimation ||
-      !this.state.hasInteraction
+        (!this.state.dragging &&
+          this.state.resetWrapAroundPosition &&
+          this.props.wrapAround) ||
+        disableAnimation ||
+        !this.state.hasInteraction
         ? 0
         : this.props.speed;
 
@@ -1020,6 +1020,7 @@ export default class Carousel extends React.Component {
                 {...getTransitionProps(this.props, this.state)}
                 deltaX={tx}
                 deltaY={ty}
+                rtlEnabled={this.props.rtlEnabled}
               >
                 {addAccessibility(validChildren, slidesToShow, currentSlide)}
               </TransitionControl>
@@ -1090,7 +1091,8 @@ Carousel.propTypes = {
   withoutControls: PropTypes.bool,
   wrapAround: PropTypes.bool,
   opacityScale: PropTypes.number,
-  slideListMargin: PropTypes.number
+  slideListMargin: PropTypes.number,
+  rtlEnabled: PropTypes.bool
 };
 
 Carousel.defaultProps = {
@@ -1130,7 +1132,8 @@ Carousel.defaultProps = {
   width: '100%',
   withoutControls: false,
   wrapAround: false,
-  slideListMargin: 10
+  slideListMargin: 10,
+  rtlEnabled: false
 };
 
 export { NextButton, PreviousButton, PagingDots };
